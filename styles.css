@@ -182,6 +182,27 @@
       padding: 1rem 1.5rem; margin-bottom: 2rem;
       display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
     }
+    .market-benchmarks {
+      margin-bottom: 2rem;
+    }
+    .market-benchmarks-card {
+      background: rgba(13,110,253,.08);
+      border: 1px solid rgba(13,110,253,.2);
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .market-benchmarks-card h3 {
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: .4rem;
+    }
+    .market-benchmarks-card ul {
+      margin: .6rem 0 .6rem 1.1rem;
+      padding: 0;
+    }
     .loyalty-icon { font-size: 1.8rem; }
     .loyalty-text strong { display: block; color: var(--gold); font-size: .95rem; margin-bottom: .1rem; }
     .loyalty-text span { font-size: .82rem; color: var(--muted); }

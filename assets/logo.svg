@@ -1,0 +1,17 @@
+<svg width="320" height="120" viewBox="0 0 320 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="120" rx="24" fill="#0B0F1A"/>
+  <rect x="12" y="12" width="296" height="96" rx="18" stroke="#0DCAF0" stroke-opacity="0.25"/>
+  <rect x="24" y="24" width="72" height="72" rx="16" fill="url(#paint0_linear)"/>
+  <path d="M48 42H64V78H48V42Z" fill="#FFFFFF"/>
+  <path d="M48 42H56V78H48V42Z" fill="#0DCAF0"/>
+  <path d="M42 42H48V78H42V42Z" fill="#0D6EFD"/>
+  <path d="M58 42H64V78H58V42Z" fill="#0DCAF0"/>
+  <text x="112" y="58" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">SAAFLOK</text>
+  <text x="112" y="84" fill="#0DCAF0" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600">Computers Service LLC</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="24" y1="24" x2="96" y2="96" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D6EFD"/>
+      <stop offset="1" stop-color="#0DCAF0"/>
+    </linearGradient>
+  </defs>
+</svg>
