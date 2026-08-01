@@ -65,7 +65,7 @@
     }
     .nav-cta:hover { opacity: .85; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; }
+    .hamburger span { width: 24px; height: 2px; background: var(--blue); border-radius: 2px; }
     #nav-toggle { display: none; }
 
     /* ── HERO ── */
