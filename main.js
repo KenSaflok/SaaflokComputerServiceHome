@@ -1,5 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('theme-toggle');
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(theme === 'light'));
+      const icon = themeToggle.querySelector('.theme-toggle-icon');
+      const label = themeToggle.querySelector('.theme-toggle-label');
+      if (icon) icon.textContent = theme === 'light' ? '🌙' : '☀️';
+      if (label) label.textContent = theme === 'light' ? 'Dark' : 'Light';
+    }
+    localStorage.setItem('saaflok-theme', theme);
+  }
+
+  const savedTheme = localStorage.getItem('saaflok-theme');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      const nextTheme = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(nextTheme);
+    });
+  }
+
   // ── Year
   document.getElementById('yr').textContent = new Date().getFullYear();
 
