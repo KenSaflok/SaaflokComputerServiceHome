@@ -2,9 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const root = document.documentElement;
   const themeToggle = document.getElementById('theme-toggle');
+  const themeOptions = document.querySelectorAll('.theme-option');
 
-  function applyTheme(theme) {
+  function applyTheme(theme, palette) {
     root.setAttribute('data-theme', theme);
+    if (palette) root.setAttribute('data-theme-palette', palette);
     if (themeToggle) {
       themeToggle.setAttribute('aria-pressed', String(theme === 'light'));
       const icon = themeToggle.querySelector('.theme-toggle-icon');
@@ -13,16 +15,32 @@ document.addEventListener('DOMContentLoaded', function () {
       if (label) label.textContent = theme === 'light' ? 'Dark' : 'Light';
     }
     localStorage.setItem('saaflok-theme', theme);
+    localStorage.setItem('saaflok-theme-palette', palette || 'cool');
   }
 
   const savedTheme = localStorage.getItem('saaflok-theme');
+  const savedPalette = localStorage.getItem('saaflok-theme-palette') || 'cool';
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
+  applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'), savedPalette);
+
+  themeOptions.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const palette = this.getAttribute('data-theme-palette') || 'cool';
+      themeOptions.forEach(function (option) { option.classList.toggle('active', option === btn); });
+      if (root.getAttribute('data-theme') !== 'light') {
+        applyTheme('light', palette);
+      } else {
+        root.setAttribute('data-theme-palette', palette);
+        localStorage.setItem('saaflok-theme-palette', palette);
+      }
+    });
+  });
 
   if (themeToggle) {
     themeToggle.addEventListener('click', function () {
       const nextTheme = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      applyTheme(nextTheme);
+      const palette = root.getAttribute('data-theme-palette') || 'cool';
+      applyTheme(nextTheme, palette);
     });
   }
 

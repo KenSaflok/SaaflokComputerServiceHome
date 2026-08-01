@@ -15,15 +15,35 @@
       --shadow:  rgba(0,0,0,0.4);
     }
     [data-theme="light"] {
-      --dark:    #f5f7fb;
-      --dark2:   #ffffff;
-      --dark3:   #eef2f7;
+      --dark:    #f4f7fb;
+      --dark2:   #fdfefe;
+      --dark3:   #edf3f7;
       --card:    #ffffff;
-      --text:    #0b1220;
-      --muted:   #5b6472;
-      --border:  rgba(11,18,32,0.12);
-      --nav-bg:  rgba(255,255,255,0.92);
-      --shadow:  rgba(15,23,42,0.12);
+      --text:    #162033;
+      --muted:   #5f6f80;
+      --border:  rgba(22,32,51,0.10);
+      --nav-bg:  rgba(255,255,255,0.90);
+      --shadow:  rgba(15,23,42,0.08);
+    }
+    [data-theme="light"][data-theme-palette="mist"] {
+      --dark:    #f3f6f8;
+      --dark2:   #fbfcfd;
+      --dark3:   #e8eef2;
+      --card:    #ffffff;
+      --text:    #21303f;
+      --muted:   #647485;
+      --border:  rgba(33,48,63,0.10);
+      --nav-bg:  rgba(251,252,253,0.92);
+    }
+    [data-theme="light"][data-theme-palette="sage"] {
+      --dark:    #f2f5f0;
+      --dark2:   #fbfcfa;
+      --dark3:   #e5ece2;
+      --card:    #ffffff;
+      --text:    #23342a;
+      --muted:   #647569;
+      --border:  rgba(35,52,42,0.10);
+      --nav-bg:  rgba(251,252,250,0.92);
     }
     html { scroll-behavior: smooth; color-scheme: dark; }
     [data-theme="light"] { color-scheme: light; }
@@ -48,6 +68,14 @@
     .nav-logo-sub { font-size: .65rem; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-actions { display: flex; align-items: center; gap: .75rem; }
+    .theme-picker { display: flex; align-items: center; gap: .35rem; padding: .2rem; border: 1px solid var(--border); border-radius: 999px; background: rgba(255,255,255,0.25); }
+    .theme-option {
+      border: none; background: transparent; color: var(--muted); padding: .28rem .55rem;
+      border-radius: 999px; font-size: .72rem; font-weight: 600; cursor: pointer;
+    }
+    .theme-option.active {
+      background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff;
+    }
     .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
     .nav-links a:hover { color: var(--text); }
     .theme-toggle {
