@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── Masked email reveal (anti-scrape)
   document.getElementById('email-link').addEventListener('click', function (e) {
     e.preventDefault();
-    const addr = 'support2@saaflokmsp.onmicrosoft.com';
+    const addr = 'Support2@SaaflokMSP.onmicrosoft.com';
     this.href = 'mailto:' + addr;
     this.textContent = addr;
   });
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
         );
         // Subject and body are both properly encoded
         window.location.href =
-          'mailto:support2@saaflokmsp.onmicrosoft.com?subject=' +
+          'mailto:Support2@SaaflokMSP.onmicrosoft.com?subject=' +
           encodeURIComponent('New Inquiry \u2013 SAAFLOK Computers Service LLC') +
           '&body=' + body;
         const successEl = document.getElementById('form-success');
