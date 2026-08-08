@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (emailLink) {
     emailLink.addEventListener('click', function (e) {
       e.preventDefault();
-      const addr = 'Support2@SaaflokMSP.onmicrosoft.com';
+      const addr = 'Support@SaaflokMSP.onmicrosoft.com';
       this.href = 'mailto:' + addr;
       this.textContent = addr;
     });
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
         );
         // Subject and body are both properly encoded
         window.location.href =
-          'mailto:Support2@SaaflokMSP.onmicrosoft.com?subject=' +
+          'mailto:Support@SaaflokMSP.onmicrosoft.com?subject=' +
           encodeURIComponent('New Inquiry \u2013 SAAFLOK Computers Service LLC') +
           '&body=' + body;
         const successEl = document.getElementById('form-success');
