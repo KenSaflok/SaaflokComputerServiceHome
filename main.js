@@ -29,13 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── Year
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // ── Masked email reveal (anti-scrape)
-  document.getElementById('email-link').addEventListener('click', function (e) {
-    e.preventDefault();
-    const addr = 'Support2@SaaflokMSP.onmicrosoft.com';
-    this.href = 'mailto:' + addr;
-    this.textContent = addr;
-  });
+  // ── Contact email is shown directly in the page
+  const emailLink = document.getElementById('email-link');
+  if (emailLink) {
+    emailLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      const addr = 'Support2@SaaflokMSP.onmicrosoft.com';
+      this.href = 'mailto:' + addr;
+      this.textContent = addr;
+    });
+  }
 
   // ── Pricing tabs (uses data-tab attribute instead of inline onclick)
   document.querySelectorAll('.ptab').forEach(function (btn) {
