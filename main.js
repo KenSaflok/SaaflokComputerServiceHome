@@ -1,5 +1,65 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  // ── EmailJS auto-response setup
+  // Setup steps (one-time):
+  //   1. Sign up at https://www.emailjs.com (free — 200 emails/month)
+  //   2. Add Email Service → connect your Microsoft 365 account → note the Service ID
+  //   3. Create Email Template with the content below → note the Template ID
+  //   4. Go to Account → API Keys → copy your Public Key
+  //   5. Replace the three placeholder strings below with your actual values
+  //
+  // ── EmailJS template content (paste this into the EmailJS template editor) ──
+  //
+  //   To:       {{to_email}}
+  //   From:     SAAFLOK Computer Services <noreply@SaaflokMSP.onmicrosoft.com>
+  //   Reply-To: Support@SaaflokMSP.onmicrosoft.com
+  //   Subject:  Enquiry {{enquiry_number}} Received – SAAFLOK Computer Services
+  //
+  //   Hi {{to_name}},
+  //
+  //   Thank you for reaching out to SAAFLOK Computer Services! We truly appreciate
+  //   you taking the time to contact us, and we're glad you chose SAAFLOK for your
+  //   technology needs.
+  //
+  //   This email confirms that we have successfully received your service request
+  //   and it is now being reviewed by our team. You don't need to do anything else
+  //   right now — we've got it from here!
+  //
+  //   ────────────────────────────────────
+  //   ✓  What Happens Next
+  //
+  //   A member of the SAAFLOK team will reach out to you within 1 business day
+  //   (Monday – Friday) to:
+  //
+  //   • Confirm the details of your service request
+  //   • Discuss appointment scheduling or drop-off options
+  //   • Provide an initial estimate or pricing information
+  //   • Answer any questions you may have before we get started
+  //
+  //   Your reference number: {{enquiry_number}}
+  //
+  //   Warm regards,
+  //   SAAFLOK Computer Services Team
+  //   Support@SaaflokMSP.onmicrosoft.com | (636) 253-9905
+  // ─────────────────────────────────────────────────────────────────────────────
+  var EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
+  var EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';
+  var EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+
+  if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+
+  function sendAutoResponse(firstName, clientEmail, inqNum) {
+    if (typeof emailjs === 'undefined' || EMAILJS_PUBLIC_KEY === 'YOUR_EMAILJS_PUBLIC_KEY') return;
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      to_name:        firstName,
+      to_email:       clientEmail,
+      enquiry_number: inqNum,
+      reply_to:       'Support@SaaflokMSP.onmicrosoft.com'
+    });
+  }
+
   const root = document.documentElement;
   const themeToggle = document.getElementById('theme-toggle');
 
@@ -76,6 +136,11 @@ document.addEventListener('DOMContentLoaded', function () {
       var successEl = document.getElementById('form-success');
       var errorEl   = document.getElementById('form-error');
 
+      // Capture client details before FormData clears on reset
+      var firstName   = (document.getElementById('fname')   || {}).value || '';
+      var clientEmail = (document.getElementById('femail')  || {}).value || '';
+      var capturedInq = enquiryNum;
+
       // Stamp the current enquiry number into the subject line
       var subjectField = document.getElementById('form-subject');
       if (subjectField) {
@@ -96,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
               successEl.innerHTML = '\u2705 Inquiry <strong>' + enquiryNum + '</strong> submitted! We\u2019ll be in touch shortly.';
               successEl.style.display = 'block';
             }
+            sendAutoResponse(firstName, clientEmail, capturedInq);
             form.reset();
             // Generate a fresh number for any subsequent submission
             enquiryNum = generateEnquiryNumber();
