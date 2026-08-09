@@ -7,7 +7,7 @@
   <meta name="description" content="SAAFLOK Computers Service LLC — Professional IT support, MSP services, and computer repair in Missouri. Empowering Your Business Through IT."/>
   <link rel="preconnect" href="https://fonts.googleapis.com" referrerpolicy="strict-origin-when-cross-origin"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://api.web3forms.com; form-action 'self'; frame-ancestors 'none';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="stylesheet" href="styles.css"/>
   <script src="main.js" defer></script>
@@ -455,13 +455,20 @@
       <div class="contact-form">
         <h3>📋 Send an Inquiry</h3>
         <!--
-          FORMSPREE SETUP (free — works on GitHub Pages):
-          1. Sign up at https://formspree.io
-          2. Create a form → set email to Support@SaaflokMSP.onmicrosoft.com
-          3. Replace YOUR_FORM_ID below with your Formspree form ID
+          WEB3FORMS SETUP (free — works on GitHub Pages):
+          1. Go to https://web3forms.com and enter Support@SaaflokMSP.onmicrosoft.com
+          2. Check your inbox for the access key email
+          3. Replace YOUR_ACCESS_KEY below with the key from that email
         -->
-        <form id="inquiry-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-          <input type="hidden" name="_subject" value="New Inquiry – SAAFLOK Computers Service LLC"/>
+        <form id="inquiry-form">
+          <!-- Replace YOUR_ACCESS_KEY with the key from web3forms.com -->
+          <input type="hidden" name="access_key" value="7246d77b-2e74-4ecb-a655-7b5c31207cb9"/>
+          <input type="hidden" name="subject" id="form-subject" value="New Inquiry – SAAFLOK Computers Service LLC"/>
+          <input type="hidden" name="enquiry_number" id="enquiry-number-field"/>
+          <div class="form-group">
+            <label>Enquiry Reference</label>
+            <div id="enquiry-number-display" style="font-weight:600;color:var(--cyan);letter-spacing:.05em">—</div>
+          </div>
           <div class="form-row">
             <div class="form-group">
               <label for="fname">First Name *</label>
@@ -525,8 +532,9 @@
             <textarea id="message" name="message" placeholder="Please describe what's happening, what you need, or any questions about our MSP plans..." required></textarea>
           </div>
           <p class="form-note">🔒 Your information is private and used only to respond to your inquiry. We typically reply within <strong>a few hours</strong> on business days.</p>
-          <button type="submit" class="submit-btn">Send Inquiry →</button>
-          <div id="form-success">✅ Message sent! We'll be in touch shortly.</div>
+          <button type="submit" class="submit-btn" id="submit-btn">Send Inquiry →</button>
+          <div id="form-success"></div>
+          <div id="form-error" style="display:none;color:#e74c3c;margin-top:.75rem">⚠️ Something went wrong. Please try again or email us directly at Support@SaaflokMSP.onmicrosoft.com</div>
         </form>
       </div>
     </div>

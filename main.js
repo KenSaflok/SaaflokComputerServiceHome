@@ -53,38 +53,64 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // ── Form submit — Formspree fallback (mailto when placeholder ID is still set)
-  const form = document.getElementById('inquiry-form');
+  // ── Enquiry number generation
+  function generateEnquiryNumber() {
+    var digits = Math.floor(1000 + Math.random() * 9000);
+    return 'INQ' + digits;
+  }
+
+  // ── Assign enquiry number when the page loads
+  var enquiryNum = generateEnquiryNumber();
+  var enquiryDisplay = document.getElementById('enquiry-number-display');
+  var enquiryField   = document.getElementById('enquiry-number-field');
+  if (enquiryDisplay) enquiryDisplay.textContent = enquiryNum;
+  if (enquiryField)   enquiryField.value = enquiryNum;
+
+  // ── Form submit — sends via Web3Forms (no email client opened)
+  var form = document.getElementById('inquiry-form');
   if (form) {
     form.addEventListener('submit', function (e) {
-      const isPlaceholder = form.action === 'https://formspree.io/f/YOUR_FORM_ID';
-      if (isPlaceholder) {
-        e.preventDefault();
-        const fn  = document.getElementById('fname').value;
-        const ln  = document.getElementById('lname').value;
-        const em  = document.getElementById('femail').value;
-        const ph  = document.getElementById('fphone').value;
-        const ct  = document.getElementById('client-type').value;
-        const sv  = document.getElementById('service').value;
-        const dev = document.getElementById('devices').value;
-        const msg = document.getElementById('message').value;
-        const body = encodeURIComponent(
-          'Name: '        + fn  + ' ' + ln  + '\n' +
-          'Email: '       + em  + '\n' +
-          'Phone: '       + ph  + '\n' +
-          'Client Type: ' + ct  + '\n' +
-          'Service: '     + sv  + '\n' +
-          'Devices: '     + dev + '\n\n' +
-          'Message:\n'    + msg
-        );
-        // Subject and body are both properly encoded
-        window.location.href =
-          'mailto:Support@SaaflokMSP.onmicrosoft.com?subject=' +
-          encodeURIComponent('New Inquiry \u2013 SAAFLOK Computers Service LLC') +
-          '&body=' + body;
-        const successEl = document.getElementById('form-success');
-        if (successEl) successEl.style.display = 'block';
+      e.preventDefault();
+
+      var submitBtn = document.getElementById('submit-btn');
+      var successEl = document.getElementById('form-success');
+      var errorEl   = document.getElementById('form-error');
+
+      // Stamp the current enquiry number into the subject line
+      var subjectField = document.getElementById('form-subject');
+      if (subjectField) {
+        subjectField.value = 'New Inquiry ' + enquiryNum + ' \u2013 SAAFLOK Computers Service LLC';
       }
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending\u2026'; }
+      if (successEl) successEl.style.display = 'none';
+      if (errorEl)   errorEl.style.display   = 'none';
+
+      var data = new FormData(form);
+
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+        .then(function (res) { return res.json(); })
+        .then(function (result) {
+          if (result.success) {
+            if (successEl) {
+              successEl.innerHTML = '\u2705 Inquiry <strong>' + enquiryNum + '</strong> submitted! We\u2019ll be in touch shortly.';
+              successEl.style.display = 'block';
+            }
+            form.reset();
+            // Generate a fresh number for any subsequent submission
+            enquiryNum = generateEnquiryNumber();
+            if (enquiryDisplay) enquiryDisplay.textContent = enquiryNum;
+            if (enquiryField)   enquiryField.value = enquiryNum;
+          } else {
+            if (errorEl) errorEl.style.display = 'block';
+          }
+        })
+        .catch(function () {
+          if (errorEl) errorEl.style.display = 'block';
+        })
+        .finally(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Inquiry \u2192'; }
+        });
     });
   }
 
